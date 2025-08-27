@@ -18,12 +18,11 @@ export async function createCheckoutSession(product: Product) {
   const orderId = `order-${randomBytes(8).toString('hex')}`;
   const amount = selectedProduct.price.toFixed(2);
   const currency = selectedProduct.currency;
-  const hash = `${merchantId}${orderId}${amount}${currency}${apiKey}`;
+  const path = `/payment?merchantId=${merchantId}&orderId=${orderId}&amount=${amount}&currency=${currency}`;
   
   const crypto = await import('crypto');
-  const signature = crypto.createHash('sha256').update(hash).digest('hex');
+  const signature = crypto.createHmac('sha256', apiKey).update(path).digest('hex');
 
-  // Construct the redirect URL with query parameters
   const baseUrl = 'https://checkout.kashier.io';
   const queryParams = new URLSearchParams({
     merchantId: merchantId,
@@ -31,12 +30,11 @@ export async function createCheckoutSession(product: Product) {
     amount: amount,
     currency: currency,
     hash: signature,
-    // These URLs should be the absolute URLs of your deployed application
-    successUrl: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
-    failureUrl: `${process.env.NEXT_PUBLIC_APP_URL}/cancel`,
-    redirect: 'true',
+    // Use the correct redirect parameters as per Kashier's documentation
+    merchantRedirect: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
+    failureRedirect: `${process.env.NEXT_PUBLIC_APP_URL}/cancel`,
+    redirect: 'true', // Automatically redirect to Kashier's page
     display: 'ar', // To display the payment page in Arabic
-    merchantRedirect: 'false', // Keep user on Kashier's success page
     store: selectedProduct.name,
   });
 
