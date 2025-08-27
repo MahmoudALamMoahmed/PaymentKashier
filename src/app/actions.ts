@@ -18,7 +18,7 @@ export async function createCheckoutSession(product: Product) {
   const orderId = `order-${randomBytes(8).toString('hex')}`;
   const amount = selectedProduct.price.toFixed(2);
   const currency = selectedProduct.currency;
-  const path = `/payment?merchantId=${merchantId}&orderId=${orderId}&amount=${amount}&currency=${currency}`;
+  const path = `/?payment=${merchantId}.${orderId}.${amount}.${currency}`;
   
   const crypto = await import('crypto');
   const signature = crypto.createHmac('sha256', apiKey).update(path).digest('hex');
