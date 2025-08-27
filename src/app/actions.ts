@@ -36,6 +36,7 @@ export async function createCheckoutSession(product: Product) {
     redirect: 'true', // Automatically redirect to Kashier's page
     display: 'ar', // To display the payment page in Arabic
     store: selectedProduct.name,
+    mode: 'test', // <-- هنا تم إضافة Test Mode
   });
 
   const redirectUrl = `${baseUrl}?${queryParams.toString()}`;
