@@ -39,7 +39,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-background p-4 sm:p-8 md:p-12 lg:p-24 font-body">
       <div className="w-full max-w-6xl text-center">
         <h1 className="text-4xl md:text-5xl font-headline font-bold text-foreground mb-4">
-          عرض منتجات كاشير
+          عرضض منتجات كاشير
         </h1>
         <p className="text-lg text-muted-foreground mb-12">
           استكشف مجموعتنا الحصرية من المنتجات. انقر على "اشترِ الآن" لإتمام عملية الشراء بسهولة وأمان عبر صفحة دفع كاشير.
